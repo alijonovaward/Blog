@@ -1,0 +1,30 @@
+<h2>{{ article.title }}</h2>
+<p>Muallif: {{ article.author.username }}</p>
+<p>Sana: {{ article.created_at|date:"d M Y H:i" }}</p>
+<div>{{ article.content|linebreaks }}</div>
+<p>Teglar:
+    {% for tag in article.tags.all %}
+        #{{ tag.name }}
+    {% endfor %}
+</p>
+
+<h3>Kommentlar</h3>
+<ul>
+    {% for comment in article.comment_set.all %}
+    <li>{{ comment.user.username }}: {{ comment.content }}</li>
+    {% empty %}
+    <li>Hozircha komment yo‘q</li>
+    {% endfor %}
+</ul>
+
+{% if request.user.is_authenticated %}
+<form method="post" action="{% url 'add_comment' 'articles' 'article' article.id %}">
+    {% csrf_token %}
+    <textarea name="content" rows="3" placeholder="Komment yozing"></textarea><br>
+    <button type="submit">Yuborish</button>
+</form>
+{% else %}
+<p>Koment qoldirish uchun <a href="{% url 'login' %}">login</a> qiling</p>
+{% endif %}
+
+<a href="{% url 'article_list' %}">Orqaga</a>

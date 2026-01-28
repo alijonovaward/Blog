@@ -1,0 +1,9 @@
+<h2>Maqolalar</h2>
+<ul>
+    {% for article in articles %}
+    <li>
+        <a href="{% url 'article_detail' article.pk %}">{{ article.title }}</a>
+        - {{ article.author.username }} - {{ article.created_at|date:"d M Y" }}
+    </li>
+    {% endfor %}
+</ul>

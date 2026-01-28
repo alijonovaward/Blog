@@ -1,0 +1,26 @@
+<h1>Blog Bosh Sahifa</h1>
+
+<form method="get" action="{% url 'search' %}">
+    <input type="text" name="q" placeholder="Qidiruv...">
+    <button type="submit">Qidirish</button>
+</form>
+
+<h2>Oxirgi maqolalar</h2>
+<ul>
+    {% for article in latest_articles %}
+    <li>
+        <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
+        - {{ article.created_at|date:"d M Y" }}
+    </li>
+    {% endfor %}
+</ul>
+
+<h2>Oxirgi videolar</h2>
+<ul>
+    {% for video in latest_videos %}
+    <li>
+        <a href="{% url 'video_detail' video.id %}">{{ video.title }}</a>
+        - {{ video.created_at|date:"d M Y" }}
+    </li>
+    {% endfor %}
+</ul>

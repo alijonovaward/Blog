@@ -1,0 +1,19 @@
+<h1>Qidiruv natijalari: "{{ query }}"</h1>
+
+<h2>Maqolalar</h2>
+<ul>
+    {% for article in articles %}
+    <li><a href="{% url 'article_detail' article.id %}">{{ article.title }}</a></li>
+    {% empty %}
+    <li>Maqola topilmadi</li>
+    {% endfor %}
+</ul>
+
+<h2>Videolar</h2>
+<ul>
+    {% for video in videos %}
+    <li><a href="{% url 'video_detail' video.id %}">{{ video.title }}</a></li>
+    {% empty %}
+    <li>Video topilmadi</li>
+    {% endfor %}
+</ul>

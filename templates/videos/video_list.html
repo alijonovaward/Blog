@@ -1,0 +1,9 @@
+<h2>Video darslar</h2>
+<ul>
+    {% for video in videos %}
+    <li>
+        <a href="{% url 'video_detail' video.pk %}">{{ video.title }}</a>
+        - {{ video.author.username }} - {{ video.created_at|date:"d M Y" }}
+    </li>
+    {% endfor %}
+</ul>
