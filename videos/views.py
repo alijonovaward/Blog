@@ -30,3 +30,11 @@ def video_detail(request, pk):
         "video": video,
         "comments": comments
     })
+
+def course_detail(request, pk):
+    videos = Course.objects.get(pk=pk).lessons.all()
+    contex = {
+        "videos": videos,
+    }
+
+    return render(request, "videos/video_list.html", contex)

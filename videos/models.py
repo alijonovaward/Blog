@@ -16,7 +16,7 @@ class VideoLesson(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     is_standalone = models.BooleanField(default=False)
 
-    course = models.ForeignKey("Course", on_delete=models.CASCADE, blank=True, null=True)
+    course = models.ForeignKey("Course", on_delete=models.CASCADE, blank=True, null=True, related_name="lessons")
     order = models.IntegerField(default=0)
 
     def __str__(self):
