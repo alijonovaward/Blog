@@ -5,7 +5,7 @@ from .models import VideoLesson
 from comments.models import Comment
 
 def video_list(request):
-    videos = VideoLesson.objects.all().order_by("-created_at")
+    videos = VideoLesson.objects.filter(is_standalone=True).order_by("-created_at")
     return render(request, "videos/video_list.html", {"videos": videos})
 
 
