@@ -6,7 +6,9 @@
     <h2>{{ article.title }}</h2>
     <p>{{ article.content|linebreaks }}</p>
 </div>
-
+<div>
+    <a href="{% url 'article_list' %}">Orqaga</a>
+</div>
 <div class="comments-section">
         <h3>💬 Kommentlar ({{ comments.count }})</h3>
 
