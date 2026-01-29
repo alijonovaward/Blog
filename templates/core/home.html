@@ -3,21 +3,349 @@
 {% block title %}Bosh sahifa{% endblock %}
 
 {% block content %}
-<h1>So‘nggi joylanganlar</h1>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Work+Sans:wght@400;500;600;700&display=swap');
 
-<h2>Maqolalar</h2>
-{% for article in latest_articles %}
-<div class="card">
-    <a href="{% url 'article_detail' article.id %}"><b>{{ article.title }}</b></a><br>
-    <small>{{ article.created_at|date:"d M Y" }}</small>
-</div>
-{% endfor %}
+    .home-page {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        font-family: 'Work Sans', sans-serif;
+    }
 
-<h2>Videolar</h2>
-{% for video in latest_videos %}
-<div class="card">
-    <a href="{% url 'video_detail' video.id %}"><b>{{ video.title }}</b></a><br>
-    <small>{{ video.created_at|date:"d M Y" }}</small>
+    .hero-section {
+        text-align: center;
+        padding: 80px 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 24px;
+        margin-bottom: 60px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background:
+            radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.5em;
+        font-weight: 900;
+        margin: 0 0 20px 0;
+        letter-spacing: -1px;
+    }
+
+    .hero-subtitle {
+        font-size: 1.3em;
+        opacity: 0.95;
+        font-weight: 400;
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 3px solid #f0f0f0;
+    }
+
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5em;
+        font-weight: 700;
+        color: #2d3436;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .section-icon {
+        font-size: 1.2em;
+    }
+
+    .view-all-link {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1em;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .view-all-link:hover {
+        color: #764ba2;
+        transform: translateX(5px);
+    }
+
+    .section {
+        margin-bottom: 80px;
+    }
+
+    .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 25px;
+    }
+
+    .content-card {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        border: 1px solid #f0f0f0;
+        position: relative;
+    }
+
+    .content-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .content-card:hover::before {
+        opacity: 1;
+    }
+
+    .content-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+
+    .card-thumbnail {
+        height: 180px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .card-thumbnail::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background:
+            radial-gradient(circle at 30% 50%, rgba(255,255,255,0.15) 0%, transparent 50%),
+            radial-gradient(circle at 70% 70%, rgba(255,255,255,0.1) 0%, transparent 50%);
+    }
+
+    .thumbnail-icon {
+        font-size: 3.5em;
+        position: relative;
+        z-index: 1;
+        opacity: 0.9;
+    }
+
+    .card-content {
+        padding: 25px;
+    }
+
+    .card-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.4em;
+        font-weight: 700;
+        color: #2d3436;
+        margin: 0 0 15px 0;
+        line-height: 1.3;
+        text-decoration: none;
+        display: block;
+        transition: color 0.3s;
+    }
+
+    .content-card:hover .card-title {
+        color: #667eea;
+    }
+
+    .card-meta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9em;
+        color: #636e72;
+    }
+
+    .meta-icon {
+        font-size: 1.1em;
+    }
+
+    /* Video cards qizil gradient */
+    .video-card .card-thumbnail {
+        background: linear-gradient(135deg, #e74c3c 0%, #8e44ad 100%);
+    }
+
+    .video-card::before {
+        background: linear-gradient(90deg, #e74c3c, #8e44ad);
+    }
+
+    .video-card:hover .card-title {
+        color: #8e44ad;
+    }
+
+    /* Animation */
+    .content-card {
+        opacity: 0;
+        animation: fadeInUp 0.6s forwards;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .content-card:nth-child(1) { animation-delay: 0s; }
+    .content-card:nth-child(2) { animation-delay: 0.1s; }
+    .content-card:nth-child(3) { animation-delay: 0.2s; }
+    .content-card:nth-child(4) { animation-delay: 0.3s; }
+    .content-card:nth-child(5) { animation-delay: 0.4s; }
+    .content-card:nth-child(6) { animation-delay: 0.5s; }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #999;
+        font-style: italic;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1em;
+        }
+
+        .section-title {
+            font-size: 2em;
+        }
+
+        .cards-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .section-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+    }
+</style>
+
+<div class="home-page">
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">📚 Bilim Portali</h1>
+            <p class="hero-subtitle">Maqolalar va video darslar bilan o'rganing</p>
+        </div>
+    </div>
+
+    <!-- Maqolalar Section -->
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="section-icon">📰</span>
+                So'nggi Maqolalar
+            </h2>
+            <a href="{% url 'article_list' %}" class="view-all-link">
+                Barchasini ko'rish →
+            </a>
+        </div>
+
+        {% if latest_articles %}
+        <div class="cards-grid">
+            {% for article in latest_articles %}
+            <div class="content-card">
+                <div class="card-thumbnail">
+                    <div class="thumbnail-icon">📄</div>
+                </div>
+                <div class="card-content">
+                    <a href="{% url 'article_detail' article.id %}" class="card-title">
+                        {{ article.title }}
+                    </a>
+                    <div class="card-meta">
+                        <span class="meta-icon">📅</span>
+                        <span>{{ article.created_at|date:"d M Y" }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">Hozircha maqolalar yo'q</div>
+        {% endif %}
+    </div>
+
+    <!-- Videolar Section -->
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="section-icon">🎬</span>
+                So'nggi Video Darslar
+            </h2>
+            <a href="{% url 'video_list' %}" class="view-all-link">
+                Barchasini ko'rish →
+            </a>
+        </div>
+
+        {% if latest_videos %}
+        <div class="cards-grid">
+            {% for video in latest_videos %}
+            <div class="content-card video-card">
+                <div class="card-thumbnail">
+                    <div class="thumbnail-icon">▶️</div>
+                </div>
+                <div class="card-content">
+                    <a href="{% url 'video_detail' video.id %}" class="card-title">
+                        {{ video.title }}
+                    </a>
+                    <div class="card-meta">
+                        <span class="meta-icon">📅</span>
+                        <span>{{ video.created_at|date:"d M Y" }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">Hozircha video darslar yo'q</div>
+        {% endif %}
+    </div>
 </div>
-{% endfor %}
 {% endblock %}
