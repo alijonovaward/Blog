@@ -19,6 +19,9 @@ def video_list(request):
 def video_detail(request, pk):
     video = get_object_or_404(VideoLesson, pk=pk)
 
+    video.views_count += 1
+    video.save(update_fields=["views_count"])
+
     # Kommentlarni olish
     content_type = ContentType.objects.get_for_model(VideoLesson)
     comments = Comment.objects.filter(

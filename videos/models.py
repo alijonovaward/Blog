@@ -19,6 +19,8 @@ class VideoLesson(models.Model):
     course = models.ForeignKey("Course", on_delete=models.CASCADE, blank=True, null=True, related_name="lessons")
     order = models.IntegerField(default=0)
 
+    views_count = models.IntegerField(default=0)
+
     def __str__(self):
         return self.title
 
