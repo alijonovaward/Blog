@@ -234,7 +234,9 @@
         {% endfor %}
     </div>
     {% endif %}
-
+    <div class="back-container">
+        <a href="{% url 'article_list' %}" class="back-btn">⬅ Orqaga</a>
+    </div>
     <div class="comments-section">
         <h3>💬 Kommentlar ({{ comments.count }})</h3>
 
@@ -266,4 +268,30 @@
 
     <a href="{% url 'video_list' %}" class="back-link">← Orqaga</a>
 </div>
+<style>
+/* Orqaga tugma container */
+.back-container {
+    margin-top: 30px; /* maqola va kommentlardan biroz pastroq */
+    text-align: left; /* chapga joylashtirish */
+}
+
+/* Orqaga tugma styling */
+.back-btn {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: all 0.2s ease-in-out;
+}
+
+.back-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.25);
+}
+</style>
 {% endblock %}
