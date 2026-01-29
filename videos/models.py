@@ -25,7 +25,7 @@ class VideoLesson(models.Model):
 class Course(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    thumbnail = models.ImageField(upload_to='courses/%Y/%m', blank=True)
+    thumbnail = models.ImageField(upload_to=f'courses/', blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, blank=True)
