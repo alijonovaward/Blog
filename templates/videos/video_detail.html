@@ -235,7 +235,15 @@
     </div>
     {% endif %}
     <div class="back-container">
-        <a href="{% url 'video_list' %}" class="back-btn">⬅ Orqaga</a>
+        {% if request.GET.from == "course_detail" %}
+            <a href="{% url 'course_list' %}" class="back-btn">⬅ Kurslarga qaytish</a>
+
+        {% elif request.GET.from == "video_list" %}
+            <a href="{% url 'video_list' %}" class="back-btn">⬅ Videolarga qaytish</a>
+
+        {% else %}
+            <a href="{% url 'video_list' %}" class="back-btn">⬅ Barcha videolar</a>
+        {% endif %}
     </div>
     <div class="comments-section">
         <h3>💬 Kommentlar ({{ comments.count }})</h3>
