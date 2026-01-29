@@ -261,11 +261,45 @@
 
 <div class="videos-page">
     <div class="page-header">
-        <h1>🎬 Video darslar</h1>
-        <p class="page-subtitle">O'quv videolari va darsliklar to'plami</p>
+        <h1>📚 Kurslar va 🎬 Video darslar</h1>
+        <p class="page-subtitle">O'quv kurslari va video darsliklar to'plami</p>
     </div>
 
+    {% if courses %}
+    <h2 style="margin-bottom: 20px;">Kurslar</h2>
+    <ul class="videos-grid">
+        {% for course in courses %}
+        <li class="video-card">
+            <a href="{% url 'home' %}" style="text-decoration: none;">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);">
+                    <div class="play-icon">📖</div>
+                </div>
+                <div class="video-content">
+                    <span class="video-title">{{ course.title }}</span>
+                    <div class="video-meta">
+                        <div class="video-author">
+                            <div class="author-avatar">{{ course.author.username|first|upper }}</div>
+                            <span>{{ course.author.username }}</span>
+                        </div>
+                        <div class="video-date">
+                            <span class="date-icon">📅</span>
+                            <span>{{ course.created_at|date:"d M Y" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-state-icon">📚</div>
+        <p class="empty-state-text">Hozircha kurslar mavjud emas</p>
+    </div>
+    {% endif %}
+
     {% if videos %}
+    <h2 style="margin: 40px 0 20px 0;">Video darslar</h2>
     <ul class="videos-grid">
         {% for video in videos %}
         <li class="video-card">
@@ -273,20 +307,13 @@
                 <div class="video-thumbnail">
                     <div class="play-icon">▶</div>
                 </div>
-
                 <div class="video-content">
-                    <span class="video-title">
-                        {{ video.title }}
-                    </span>
-
+                    <span class="video-title">{{ video.title }}</span>
                     <div class="video-meta">
                         <div class="video-author">
-                            <div class="author-avatar">
-                                {{ video.author.username|first|upper }}
-                            </div>
+                            <div class="author-avatar">{{ video.author.username|first|upper }}</div>
                             <span>{{ video.author.username }}</span>
                         </div>
-
                         <div class="video-date">
                             <span class="date-icon">📅</span>
                             <span>{{ video.created_at|date:"d M Y" }}</span>
@@ -304,4 +331,5 @@
     </div>
     {% endif %}
 </div>
+
 {% endblock %}

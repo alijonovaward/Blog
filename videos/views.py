@@ -1,12 +1,19 @@
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render, get_object_or_404
-from .models import VideoLesson
+from .models import VideoLesson, Course
 
 from comments.models import Comment
 
 def video_list(request):
     videos = VideoLesson.objects.filter(is_standalone=True).order_by("-created_at")
-    return render(request, "videos/video_list.html", {"videos": videos})
+    courses = Course.objects.filter(is_published=True).order_by("-created_at")
+
+    contex = {
+        "videos": videos,
+        "courses": courses
+    }
+
+    return render(request, "videos/video_list.html", contex)
 
 
 def video_detail(request, pk):
