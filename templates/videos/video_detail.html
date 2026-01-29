@@ -211,10 +211,14 @@
         </div>
     </div>
 
+    <!-- Video Player -->
     <div class="video-player">
         <iframe
-            src="{{ embed_url }}"
+            src="{{ video.video_url }}"
+            title="{{ video.title }}"
+            frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
             allowfullscreen>
         </iframe>
     </div>
