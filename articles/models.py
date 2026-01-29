@@ -14,5 +14,7 @@ class Article(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, blank=True)
 
+    views_count = models.IntegerField(default=0)
+
     def __str__(self):
         return self.title

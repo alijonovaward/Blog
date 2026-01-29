@@ -11,6 +11,9 @@ def article_list(request):
 def article_detail(request, pk):
     article = get_object_or_404(Article, pk=pk)
 
+    article.views_count += 1
+    article.save(update_fields=["views_count"])
+
     content_type = ContentType.objects.get_for_model(Article)
     comments = Comment.objects.filter(
         content_type=content_type,
