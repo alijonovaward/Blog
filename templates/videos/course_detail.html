@@ -269,7 +269,7 @@
     <ul class="videos-grid">
         {% for video in videos %}
         <li class="video-card">
-            <a href="{% url 'video_detail' video.pk %}" style="text-decoration: none;">
+            <a href="{% url 'video_detail' video.pk %}?from=course_detail" style="text-decoration: none;">
                 <div class="video-thumbnail">
                     <div class="play-icon">▶</div>
                 </div>
