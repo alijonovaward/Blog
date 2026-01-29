@@ -35,6 +35,7 @@ def course_detail(request, pk):
     videos = Course.objects.get(pk=pk).lessons.all()
     contex = {
         "videos": videos,
+        "courses": ""
     }
 
     return render(request, "videos/video_list.html", contex)
