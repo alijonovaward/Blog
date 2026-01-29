@@ -236,13 +236,13 @@
     {% endif %}
     <div class="back-container">
         {% if request.GET.from == "course_detail" %}
-            <a href="{% url 'course_list' request.GET.id  %}" class="back-btn">⬅ {{course.title}} kursiga qaytish</a>
+            <a href="{% url 'course_list' request.GET.id  %}" class="back-btn">⬅ qaytish</a>
 
         {% elif request.GET.from == "video_list" %}
-            <a href="{% url 'video_list' %}" class="back-btn">⬅ Videolarga qaytish</a>
+            <a href="{% url 'video_list' %}" class="back-btn">⬅ qaytish</a>
 
         {% else %}
-            <a href="{% url 'video_list' %}" class="back-btn">⬅ Barcha videolar</a>
+            <a href="{% url 'video_list' %}" class="back-btn">⬅ videolar</a>
         {% endif %}
     </div>
     <div class="comments-section">
