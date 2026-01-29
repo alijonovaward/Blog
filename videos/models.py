@@ -16,5 +16,20 @@ class VideoLesson(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     is_standalone = models.BooleanField(default=False)
 
+    course = models.ForeignKey("Course", on_delete=models.CASCADE, blank=True, null=True)
+    order = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.title
+
+class Course(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    thumbnail = models.ImageField(upload_to='courses/%Y/%m', blank=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    tags = models.ManyToManyField(Tag, blank=True)
+    is_published = models.BooleanField(default=False)
+
     def __str__(self):
         return self.title
