@@ -20,7 +20,7 @@
 
 <h3>Kommentlar</h3>
 <ul>
-    {% for comment in video.comment_set.all %}
+    {% for comment in comments %}
     <li>{{ comment.user.username }}: {{ comment.content }}</li>
     {% empty %}
     <li>Hozircha komment yo‘q</li>
