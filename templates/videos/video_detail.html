@@ -236,7 +236,7 @@
     {% endif %}
     <div class="back-container">
         {% if request.GET.from == "course_detail" %}
-            <a href="{% url 'course_list' %}" class="back-btn">⬅ Kurslarga qaytish</a>
+            <a href="{% url 'course_list' request.GET.id  %}" class="back-btn">⬅ Kurslarga qaytish</a>
 
         {% elif request.GET.from == "video_list" %}
             <a href="{% url 'video_list' %}" class="back-btn">⬅ Videolarga qaytish</a>
