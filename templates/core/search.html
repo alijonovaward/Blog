@@ -1,3 +1,7 @@
+{% extends "base.html" %}
+{% block title %} Qidiruv {% endblock %}
+
+{% block content %}
 <h1>Qidiruv natijalari: "{{ query }}"</h1>
 
 <h2>Maqolalar</h2>
@@ -17,3 +21,4 @@
     <li>Video topilmadi</li>
     {% endfor %}
 </ul>
+{% endblock %}

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mening Blogim{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+        }
+        /* SIDEBAR */
+        .sidebar {
+            width: 220px;
+            background: #111827;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        .sidebar.show {
+            transform: translateX(0);
+        }
+        .sidebar h2 {
+            margin-top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .close-btn {
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            padding: 0;
+            display: block;
+        }
+        .sidebar a {
+            color: #d1d5db;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+        }
+        .sidebar a:hover {
+            color: white;
+        }
+        /* CONTENT */
+        .content {
+            padding: 15px;
+            transition: margin-left 0.3s ease;
+        }
+        .navbar {
+            background: white;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .menu-btn {
+            font-size: 22px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        /* OVERLAY */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            display: none;
+            z-index: 900;
+        }
+        .overlay.show {
+            display: block;
+        }
+        /* DESKTOP */
+        @media (min-width: 769px) {
+            .sidebar.show ~ .content {
+                margin-left: 260px;
+            }
+            .close-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="sidebar" id="sidebar">
+    <h2>
+        📘 Blog
+        <button class="close-btn" onclick="toggleSidebar()">×</button>
+    </h2>
+    <a href="{% url 'home' %}">🏠 Bosh sahifa</a>
+    <a href="{% url 'article_list' %}">📝 Maqolalar</a>
+    <a href="{% url 'video_list' %}">🎬 Video darslar</a>
+    <hr>
+    {% if request.user.is_authenticated %}
+        <p>👤 {{ request.user.username }}</p>
+        <a href="{% url 'logout' %}">Chiqish</a>
+    {% else %}
+        <a href="{% url 'login' %}">Kirish</a>
+        <a href="{% url 'register' %}">Ro'yxatdan o'tish</a>
+    {% endif %}
+</div>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<div class="content">
+    <div class="navbar">
+        <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+        <form method="get" action="{% url 'search' %}">
+            <input type="text" name="q" placeholder="Qidirish..." style="padding:5px;">
+            <button type="submit">Qidirish</button>
+        </form>
+    </div>
+    {% block content %}
+    {% endblock %}
+</div>
+<script>
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("show");
+    document.getElementById("overlay").classList.toggle("show");
+}
+</script>
+</body>
+</html>

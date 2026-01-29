@@ -1,3 +1,7 @@
+{% extends "base.html" %}
+{% block title %} Vide darslar {% endblock %}
+
+{% block content %}
 <h2>Video darslar</h2>
 <ul>
     {% for video in videos %}
@@ -7,3 +11,4 @@
     </li>
     {% endfor %}
 </ul>
+{% endblock %}
