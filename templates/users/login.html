@@ -1,8 +1,51 @@
-<h2>Kirish</h2>
-<form method="post">
+<h2 style="text-align:center; font-family: Arial, sans-serif; color: #333;">Kirish</h2>
+
+<form method="post" style="
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 30px;
+    background: #f7f7f7;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+">
     {% csrf_token %}
-    <input type="text" name="username" placeholder="Username" required><br>
-    <input type="password" name="password" placeholder="Parol" required><br>
-    <button type="submit">Kirish</button>
+
+    <input type="text" name="username" placeholder="Username" required
+        style="
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        ">
+
+    <input type="password" name="password" placeholder="Parol" required
+        style="
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        ">
+
+    <button type="submit" style="
+        width: 100%;
+        padding: 12px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+    " onmouseover="this.style.backgroundColor='#45a049'" onmouseout="this.style.backgroundColor='#4CAF50'">
+        Kirish
+    </button>
+
+    <p style="text-align:center; margin-top: 15px; font-size: 14px;">
+        <a href="{% url 'register' %}" style="color:#4CAF50; text-decoration:none;">Ro‘yxatdan o‘tish</a>
+    </p>
 </form>
-<a href="{% url 'register' %}">Ro‘yxatdan o‘tish</a>
