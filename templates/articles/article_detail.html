@@ -12,7 +12,7 @@
 
         {% if request.user.is_authenticated %}
         <div class="comment-form">
-            <form method="post" action="{% url 'add_comment' 'videos' 'videolesson' video.id %}">
+            <form method="post" action="{% url 'add_comment' 'articles' 'article' article.id %}">
                 {% csrf_token %}
                 <textarea name="content" rows="4" placeholder="Fikringizni bildiring..." required></textarea>
                 <button type="submit" class="btn">📤 Yuborish</button>
