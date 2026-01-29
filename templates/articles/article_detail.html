@@ -7,5 +7,32 @@
     <p>{{ article.content|linebreaks }}</p>
 </div>
 
-<!-- Kommentlar pastda qoladi -->
+<div class="comments-section">
+        <h3>💬 Kommentlar ({{ comments.count }})</h3>
+
+        {% if request.user.is_authenticated %}
+        <div class="comment-form">
+            <form method="post" action="{% url 'add_comment' 'videos' 'videolesson' video.id %}">
+                {% csrf_token %}
+                <textarea name="content" rows="4" placeholder="Fikringizni bildiring..." required></textarea>
+                <button type="submit" class="btn">📤 Yuborish</button>
+            </form>
+        </div>
+        {% else %}
+        <div class="login-prompt">
+            <p>Komment qoldirish uchun <a href="{% url 'login' %}">tizimga kiring</a></p>
+        </div>
+        {% endif %}
+
+        <ul class="comment-list">
+            {% for comment in comments %}
+            <li class="comment-item">
+                <div class="comment-author">{{ comment.user.username }}</div>
+                <div class="comment-content">{{ comment.content }}</div>
+            </li>
+            {% empty %}
+            <li class="no-comments">Hozircha kommentlar yo'q. Birinchi bo'lib komment qoldiring! 💭</li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}
