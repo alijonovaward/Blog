@@ -329,28 +329,89 @@
         {% if latest_videos %}
         <div class="cards-grid">
             {% for video in latest_videos %}
-            <div class="content-card video-card">
-                <div class="card-thumbnail">
-                    <div class="thumbnail-icon">▶️</div>
-                </div>
-                <div class="card-content">
-                    <a href="{% url 'video_detail' video.id %}" class="card-title">
-                        {{ video.title }}
-                    </a>
-                    <div class="card-meta">
-                        <span class="meta-icon">📅</span>
-                        <span>{{ video.created_at|date:"d M Y" }}</span>
-                    </div>
-                </div>
-                <div class="article-stats" style="padding:5px 5px 5px 5px; color:#636e72;">
-                    👁️‍🗨️ {{ video.views_count }}
-                </div>
-            </div>
-            {% endfor %}
+<div class="content-card video-card">
+
+    <a href="{% url 'video_detail' video.id %}">
+        <div class="card-thumbnail video-thumb">
+
+            {% if video.thumbnail %}
+                <img src="{{ video.thumbnail.url }}" alt="{{ video.title }}">
+            {% else %}
+                <div class="video-fallback"></div>
+            {% endif %}
+
+            <div class="play-btn">▶</div>
+
+        </div>
+    </a>
+
+    <div class="card-content">
+        <a href="{% url 'video_detail' video.id %}" class="card-title">
+            {{ video.title }}
+        </a>
+        <div class="card-meta">
+            <span class="meta-icon">📅</span>
+            <span>{{ video.created_at|date:"d M Y" }}</span>
+        </div>
+    </div>
+
+    <div class="article-stats" style="padding:5px; color:#636e72;">
+        👁️ {{ video.views_count }}
+    </div>
+
+</div>
+{% endfor %}
+
         </div>
         {% else %}
         <div class="empty-state">Hozircha video darslar yo'q</div>
         {% endif %}
     </div>
 </div>
+<style>
+/* Video thumbnail maxsus */
+.video-thumb {
+    position: relative;
+    height: 180px;
+    background: #000;
+    overflow: hidden;
+}
+
+/* Video rasmlar COVER bo‘lsin */
+.video-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* MUHIM: contain emas */
+    display: block;
+}
+
+/* Agar rasm bo‘lmasa */
+.video-fallback {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #e74c3c 0%, #8e44ad 100%);
+}
+
+/* Play tugma */
+.play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ESKI gradientni o‘chiramiz */
+.video-card .card-thumbnail {
+    background: none !important;
+}
+</style>
 {% endblock %}
