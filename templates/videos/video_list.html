@@ -307,8 +307,11 @@
         {% for video in videos %}
         <li class="video-card">
             <a href="{% url 'video_detail' video.pk %}" style="text-decoration: none;">
-                <div class="video-thumbnail">
-                    <div class="play-icon">▶</div>
+                <div class="video-thumbnail" style="position: relative; background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);">
+                    {% if video.thumbnail %}
+                    <img src="{{ video.thumbnail.url }}" alt="{{ video.title }}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 0;">
+                    {% endif %}
+                    <div class="play-icon" style="position: relative; z-index: 1;">📖</div>
                 </div>
                 <div class="video-content">
                     <span class="video-title">{{ video.title }}</span>

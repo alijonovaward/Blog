@@ -21,6 +21,8 @@ class VideoLesson(models.Model):
 
     views_count = models.IntegerField(default=0)
 
+    thumbnail = models.ImageField(upload_to=f'videos/', blank=True)
+
     def __str__(self):
         return self.title
 
