@@ -327,13 +327,13 @@
         <div class="cards-grid">
             {% for video in latest_videos %}
             <div class="content-card video-card">
+                <a href="{% url 'video_detail' video.id %}" class="card-title">
+                        {{ video.title }}
                 <div class="card-thumbnail">
                     <div class="thumbnail-icon">▶️</div>
                 </div>
+                </a>
                 <div class="card-content">
-                    <a href="{% url 'video_detail' video.id %}" class="card-title">
-                        {{ video.title }}
-                    </a>
                     <div class="card-meta">
                         <span class="meta-icon">📅</span>
                         <span>{{ video.created_at|date:"d M Y" }}</span>
