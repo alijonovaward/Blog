@@ -281,8 +281,7 @@
         <div class="cards-grid">
             {% for article in latest_articles %}
             <div class="content-card">
-                <a href="{% url 'article_detail' article.id %}" class="card-title">
-                        {{ article.title }}
+
                 <!-- THUMBNAIL -->
                 <div class="card-thumbnail">
                     {% if article.thumbnail %}
@@ -291,9 +290,12 @@
                         <div class="thumbnail-icon">📄</div>
                     {% endif %}
                 </div>
-                 </a>
+
                 <!-- CONTENT -->
                 <div class="card-content">
+                    <a href="{% url 'article_detail' article.id %}" class="card-title">
+                        {{ article.title }}
+                    </a>
                     <div class="card-meta">
                         <span class="meta-icon">📅</span>
                         <span>{{ article.created_at|date:"d M Y" }}</span>
