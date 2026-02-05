@@ -1,6 +1,7 @@
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render, get_object_or_404
 from .models import VideoLesson, Course
+from django.contrib.auth.decorators import login_required
 
 from comments.models import Comment
 
@@ -15,7 +16,7 @@ def video_list(request):
 
     return render(request, "videos/video_list.html", contex)
 
-
+@login_required
 def video_detail(request, pk):
     video = get_object_or_404(VideoLesson, pk=pk)
 
