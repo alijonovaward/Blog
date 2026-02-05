@@ -1,15 +1,18 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from articles.models import Article
 from videos.models import VideoLesson
 from django.db.models import Q
 
 def home(request):
+    users_count = User.objects.count()
     # Oxirgi 5 ta article va video
     latest_articles = Article.objects.all().order_by("-created_at")[:5]
     latest_videos = VideoLesson.objects.filter(is_standalone=True).order_by("-created_at")[:5]
     return render(request, "core/home.html", {
         "latest_articles": latest_articles,
         "latest_videos": latest_videos,
+        "users_count": users_count
     })
 
 def search(request):
