@@ -36,7 +36,7 @@ def login_view(request):
             login(request, user)
             if next_url == "":
                 next_url = "home"
-            return redirect("home")  # 🔥 asosiy o‘zgarish
+            return redirect(next_url)  # 🔥 asosiy o‘zgarish
         else:
             messages.error(request, "Username yoki parol noto‘g‘ri!")
 
