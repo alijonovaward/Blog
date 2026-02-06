@@ -25,7 +25,7 @@ def register_view(request):
 
 
 def login_view(request):
-    next_url = request.GET.get("next") or request.POST.get("next")
+    next_url = request.GET.get("next", "") or request.POST.get("next", "")
 
     if request.method == "POST":
         username = request.POST.get("username")
@@ -34,7 +34,9 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect(next_url or "home")  # 🔥 asosiy o‘zgarish
+            if next_url == "":
+                next_url = "home"
+            return redirect("home")  # 🔥 asosiy o‘zgarish
         else:
             messages.error(request, "Username yoki parol noto‘g‘ri!")
 
