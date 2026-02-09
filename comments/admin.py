@@ -8,6 +8,6 @@ class CommentAdmin(admin.ModelAdmin):
     search_fields = ('user__username', 'content')
 
     def content_preview(self, obj):
-        return obj.content[:50]  # faqat 50 ta belgi ko‘rsatadi
+        return obj.content[:50]  # faqat 50 ta belgi ko‘rsatadi little change for the test
     content_preview.short_description = 'Komment'
 
